@@ -33,7 +33,6 @@ const chooseActivePage = state => {
   } else if (state.activePage$() === PageEnum.About) {
     return about.view()
   } else {
-    // No page defined yet
     console.log(`${state.activePage$().toString()} is unknown.`)
     return h('div', '404')
   }

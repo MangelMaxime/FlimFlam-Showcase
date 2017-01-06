@@ -6,21 +6,27 @@ const init = _ => {
 
 }
 
-const iconLinks = (icon, text) =>
-  h('a.button', [
-    h('span.icon', [
-      h(`i.fa.${icon}`)
-    ]),
-    h('span', text)
-  ])
+const iconLinks = (icon, text, url) =>
+  h('a.button', {
+    props: {
+      href: url
+    }
+  },
+    [
+      h('span.icon', [
+        h(`i.fa.${icon}`)
+      ]),
+      h('span', text)
+    ])
 
 
 const flimflamDocumentation = _ =>
   h('div.nav-right.nav-menu', [
     h('a.nav-item',
       {
-        props:
-        { href: 'https://flimflamjs.github.io/' }
+        props: {
+          href: 'https://flimflamjs.github.io/'
+        }
       }, 'Documentation')
   ])
 
@@ -42,8 +48,8 @@ const view = state =>
     centerNav(),
     flimflamDocumentation(),
     h('span.nav-item', [
-      iconLinks("fa-twitter", "Twitter"),
-      iconLinks("fa-github", "Github")
+      iconLinks("fa-twitter", "Twitter", "#"),
+      iconLinks("fa-github", "Github", "https://github.com/flimflamjs")
     ])
   ])
 
