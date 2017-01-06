@@ -56,7 +56,8 @@ module.exports = env => {
         filename: 'index.html'
       }),
       // new webpack.optimize.UglifyJsPlugin({
-      //   //comments: false
+      //   comments: false,
+      //   beautify: true
       // })
     ]
   };

@@ -1,14 +1,13 @@
 import Enum from 'es6-enum'
+import { PageEnum } from './const'
 import R from 'ramda'
 import flyd from 'flyd'
 import h from 'snabbdom/h'
 
-const MenuType = Enum("Home", "About", "Simple", "Counter", "Clock", "Medium", "NestedCounter")
-
 const MenuState = Enum("Open", "Closed")
 
-const init = _ => {
-  const ActiveMenu = flyd.stream(MenuType.Home)
+const init = startPage => {
+  const ActiveMenu = flyd.stream(startPage)
   const ChangeMenu = menu => ActiveMenu(menu)
 
   const SimpleMenuState = flyd.stream(MenuState.Closed)
@@ -18,9 +17,9 @@ const init = _ => {
   const ChangeMediumMenuState = newState => MediumMenuState(newState)
 
   const ToggleMenuState = menuType => {
-    if (menuType === MenuType.Simple) {
+    if (menuType === PageEnum.Simple) {
       InternalToggleMenuState(SimpleMenuState, ChangeSimpleMenuState)
-    } else if (menuType === MenuType.Medium) {
+    } else if (menuType === PageEnum.Medium) {
       InternalToggleMenuState(MediumMenuState, ChangeMediumMenuState)
     } else {
       console.log(`${menuType} can't be fold.`)
@@ -28,9 +27,9 @@ const init = _ => {
   }
 
   const GetMenuState = menuType => {
-    if (menuType === MenuType.Simple) {
+    if (menuType === PageEnum.Simple) {
       return SimpleMenuState()
-    } else if (menuType === MenuType.Medium) {
+    } else if (menuType === PageEnum.Medium) {
       return MediumMenuState()
     } else {
       console.log(`Can't resolve state for ${menuType}.`)
@@ -73,11 +72,10 @@ const subMenus = (state, label, menuType, menus) => {
 
   return h('ul.menu-list', [
     h('li', [
-      h(`a.${isActive(menuType)}`,
+      h(`a`,
         {
           on: {
             click: _ => {
-              state.ChangeMenu(menuType)
               state.ToggleMenuState(menuType)
             }
           }
@@ -111,11 +109,11 @@ const view = state => {
       [
         {
           label: 'Home',
-          menuType: MenuType.Home
+          menuType: PageEnum.Home
         },
         {
           label: 'About',
-          menuType: MenuType.About
+          menuType: PageEnum.About
         }
       ]
     ),
@@ -123,26 +121,26 @@ const view = state => {
     subMenus(
       state,
       'Simple',
-      MenuType.Simple,
+      PageEnum.Simple,
       [
         {
           label: 'Counter',
-          type: MenuType.Counter
+          type: PageEnum.Counter
         },
         {
           label: 'Clock',
-          type: MenuType.Clock
+          type: PageEnum.Clock
         }
       ]
     ),
     subMenus(
       state,
       'Medium',
-      MenuType.Medium,
+      PageEnum.Medium,
       [
         {
           label: 'Nested counter',
-          type: MenuType.NestedCounter
+          type: PageEnum.NestedCounter
         }
 
       ]

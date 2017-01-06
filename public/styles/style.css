@@ -1,5 +1,6 @@
 html, body {
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 .app-body {
@@ -8,4 +9,8 @@ html, body {
 
 .is-clickable {
   cursor: pointer;
+}
+
+.body-header {
+  margin: 0 0 10px;
 }
