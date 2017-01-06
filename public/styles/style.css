@@ -1,0 +1,11 @@
+html, body {
+  overflow: hidden;
+}
+
+.app-body {
+  margin: 10px 0;
+}
+
+.is-clickable {
+  cursor: pointer;
+}
