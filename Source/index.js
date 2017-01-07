@@ -2,6 +2,7 @@ import Enum from 'es6-enum'
 import { PageEnum } from './const'
 import R from 'ramda'
 import about from './pages/about'
+import clock from './pages/samples/simple/clock'
 import counter from './pages/samples/simple/counter'
 import flyd from 'flyd'
 import h from 'snabbdom/h'
@@ -20,6 +21,7 @@ const init = startPage => {
   const navbarState = navbar.init()
   const menuState = menu.init(startPage)
   const counterState = counter.init()
+  const clockState = clock.init()
   const activePage$ = flyd.stream(startPage)
 
   flyd.on((page) => {
@@ -32,7 +34,7 @@ const init = startPage => {
   }, navbarState.changePage$)
 
   return {
-    navbarState, menuState, activePage$, counterState
+    navbarState, menuState, activePage$, counterState, clockState
   }
 }
 
@@ -43,6 +45,8 @@ const chooseActivePage = state => {
     return about.view()
   } else if (state.activePage$() === PageEnum.Counter) {
     return counter.view(state.counterState)
+  } else if (state.activePage$() === PageEnum.Clock) {
+    return clock.view(state.clockState)
   } else {
     console.log(`${state.activePage$().toString()} is unknown.`)
     return h('div', '404')

@@ -8,7 +8,7 @@ module.exports = env => {
      // entry tells webpack where to start looking.
     entry: {
       app: path.join(__dirname, './Source/'),
-      vendor: ['snabbdom/h', 'ramda', 'flyd', 'ff-core/render', 'snabbdom', 'es6-enum'],
+      vendor: ['snabbdom/h', 'ramda', 'flyd', 'ff-core/render', 'snabbdom', 'es6-enum', 'moment'],
     },
     /**
      * output tells webpack where to dump the files it has processed.
