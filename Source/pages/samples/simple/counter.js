@@ -4,7 +4,8 @@ import h from 'snabbdom/h'
 
 const init = _ => {
   /**
-   * @type {Stream}
+   * Counter current value
+   * @return {Stream}
    */
   const value$ = flyd.stream(0)
 
