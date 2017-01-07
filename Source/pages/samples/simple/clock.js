@@ -5,10 +5,17 @@ import h from 'snabbdom/h'
 import moment from 'moment'
 
 const init = _ => {
+  /**
+   * Tick stream occuring every second
+   */
   const every_second$ = flyd_every(1000)
 
+  /**
+   * Current date value
+   */
   const currentDate$ = flyd.stream()
 
+  // Update currentDate$ when every_second$ tick
   flyd.on((date) => {
     currentDate$(date)
   }, every_second$)
