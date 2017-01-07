@@ -1,9 +1,12 @@
+import { PageEnum } from './const'
 import R from 'ramda'
 import flyd from 'flyd'
 import h from 'snabbdom/h'
 
 const init = _ => {
+  const changePage$ = flyd.stream()
 
+  return { changePage$ }
 }
 
 const iconLinks = (icon, text, url) =>
@@ -31,13 +34,19 @@ const flimflamDocumentation = _ =>
   ])
 
 
-const centerNav = _ =>
+const centerNav = state =>
   h('div.nav-center', [
-    h('a.nav-item', [
-      h('span.icon', [
-        h('i.fa.fa-home')
+    h('a.nav-item',
+      {
+        on: {
+          click: _ => state.changePage$(PageEnum.Home)
+        }
+      },
+      [
+        h('span.icon', [
+          h('i.fa.fa-home')
+        ])
       ])
-    ])
   ])
 
 const view = state =>
@@ -45,7 +54,7 @@ const view = state =>
     h('div.nav-left', [
       h('h1.nav-item.is-brand.title.is-4', "FLIMFLAM")
     ]),
-    centerNav(),
+    centerNav(state),
     flimflamDocumentation(),
     h('span.nav-item', [
       iconLinks("fa-twitter", "Twitter", "#"),

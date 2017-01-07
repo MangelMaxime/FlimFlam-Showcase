@@ -20,9 +20,15 @@ const init = startPage => {
   const navbarState = navbar.init()
   const menuState = menu.init(startPage)
   const counterState = counter.init()
-  const activePage$ = flyd.scan((oldPage, newPage) => {
-    return newPage;
-  }, startPage, menuState.ActiveMenu)
+  const activePage$ = flyd.stream(startPage)
+
+  flyd.on((page) => {
+    activePage$(page)
+  }, menuState.ActiveMenu)
+
+  flyd.on((page) => {
+    activePage$(page)
+  }, navbarState.changePage$)
 
   return {
     navbarState, menuState, activePage$, counterState
