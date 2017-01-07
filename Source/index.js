@@ -28,6 +28,7 @@ const init = startPage => {
 
   flyd.on((page) => {
     activePage$(page)
+    menuState.ActiveMenu(page)
   }, navbarState.changePage$)
 
   return {
