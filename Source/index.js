@@ -2,6 +2,7 @@ import Enum from 'es6-enum'
 import { PageEnum } from './const'
 import R from 'ramda'
 import about from './pages/about'
+import counter from './pages/samples/simple/counter'
 import flyd from 'flyd'
 import h from 'snabbdom/h'
 import home from './pages/home'
@@ -16,14 +17,15 @@ import snabbdom from 'snabbdom'
 
 const init = startPage => {
 
-  const navbar$ = navbar.init()
-  const menu$ = menu.init(startPage)
+  const navbarState = navbar.init()
+  const menuState = menu.init(startPage)
+  const counterState = counter.init()
   const activePage$ = flyd.scan((oldPage, newPage) => {
     return newPage;
-  }, startPage, menu$.ActiveMenu)
+  }, startPage, menuState.ActiveMenu)
 
   return {
-    navbar$, menu$, activePage$
+    navbarState, menuState, activePage$, counterState
   }
 }
 
@@ -32,6 +34,8 @@ const chooseActivePage = state => {
     return home.view()
   } else if (state.activePage$() === PageEnum.About) {
     return about.view()
+  } else if (state.activePage$() === PageEnum.Counter) {
+    return counter.view(state.counterState)
   } else {
     console.log(`${state.activePage$().toString()} is unknown.`)
     return h('div', '404')
@@ -41,17 +45,17 @@ const chooseActivePage = state => {
 const view = state =>
   h('div', [
     h('div.container', [
-      navbar.view(state.navbar$),
+      navbar.view(state.navbarState),
     ]),
     h('section.hero.is-primary.body-header', [
       h('div.hero-body', [
         h('div.container', [
           h('div.columns.is-vcentered', [
             h('div.column', [
-              h('p.title', 'Documentation'),
+              h('p.title', 'Showcase'),
               h('p.subtitle', {
                 props: {
-                  innerHTML: 'Everything you need to create a website using <strong>FlimFlamJS</strong> pattern.'
+                  innerHTML: 'Just a simple experimentation around <strong>FlimFlamJS</strong> pattern.'
                 }
               })
             ])
@@ -62,7 +66,7 @@ const view = state =>
     h('div.container', [
       h('div.columns', [
         h('div.column.is-3', [
-          menu.view(state.menu$)
+          menu.view(state.menuState)
         ]),
         h('div.column', [
           chooseActivePage(state)
