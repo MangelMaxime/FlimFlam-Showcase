@@ -15,6 +15,7 @@ const init = _ => {
   }
 
   const addCounter = _ => {
+    console.log(counters$());
     counters$(R.append(
       {
         id: nextId$()
@@ -25,8 +26,6 @@ const init = _ => {
     // Increment nextId value
     nextId$(nextId$() + 1)
   }
-
-  flyd.on(test => console.log(test), counters$)
 
   const resetAll = _ => {
     R.map(current => current.counterState.reset(), counters$())

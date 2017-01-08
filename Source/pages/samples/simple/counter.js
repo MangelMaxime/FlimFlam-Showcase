@@ -18,8 +18,10 @@ const init = _ => {
   /**
    * Add 1 to the counter value
    */
-  const add = _ =>
-    value$(value$() + 1)
+  const add = _ => {
+    console.log("counter add");
+    value$(value$() + 1);
+  }
 
   /**
    * Substract 1 to the counter value
