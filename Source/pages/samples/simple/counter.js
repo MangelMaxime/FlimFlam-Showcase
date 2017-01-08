@@ -43,8 +43,7 @@ const simpleButton = (text, onClick) =>
 
 const view = state => {
   return h('div.columns.is-vcentered', [
-    h('div.column.is-narrow', `Counter value: ${state.value$()}`),
-    h('div.column.is-narrow', { style: { width: '50px' } }), // Inline style to force a space between the value and the actions
+    h('div.column.is-narrow', { style: { width: '170px' } }, `Counter value: ${state.value$()}`),  // Inline style to force a space between the value and the actions
     simpleButton("+1", state.add),
     simpleButton("-1", state.sub),
     simpleButton("Reset", state.reset)
