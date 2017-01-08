@@ -4,7 +4,9 @@ This repo is an experimentation around [FlimFlam pattern](https://flimflamjs.git
 
 ## How to run
 
-To run this repo you need to have yarn installed. (current version used 0.18.1) and then run this commands.
+To run this repo you need to have yarn installed. (current version used 0.18.1)
+
+Then run this commands:
 
 ```bash
 -> yarn install
