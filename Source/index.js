@@ -9,6 +9,7 @@ import h from 'snabbdom/h'
 import home from './pages/home'
 import menu from './menu'
 import navbar from './navbar'
+import nestedCounter from './pages/samples/medium/nested_counter'
 import render from 'ff-core/render'
 import sClass from 'snabbdom/modules/class'
 import sEventlisteners from 'snabbdom/modules/eventlisteners'
@@ -21,7 +22,8 @@ const init = startPage => {
   const navbarState = navbar.init()
   const menuState = menu.init(startPage)
   const counterState = counter.init()
-  const clockState = clock.init()
+  const nestedCounterState = nestedCounter.init()
+  const clockState = 0 //clock.init()
   const activePage$ = flyd.stream(startPage)
 
   flyd.on((page) => {
@@ -34,22 +36,26 @@ const init = startPage => {
   }, navbarState.changePage$)
 
   return {
-    navbarState, menuState, activePage$, counterState, clockState
+    navbarState, menuState, activePage$, counterState, clockState, nestedCounterState
   }
 }
 
 const chooseActivePage = state => {
-  if (state.activePage$() === PageEnum.Home) {
-    return home.view()
-  } else if (state.activePage$() === PageEnum.About) {
-    return about.view()
-  } else if (state.activePage$() === PageEnum.Counter) {
-    return counter.view(state.counterState)
-  } else if (state.activePage$() === PageEnum.Clock) {
-    return clock.view(state.clockState)
-  } else {
-    console.log(`${state.activePage$().toString()} is unknown.`)
-    return h('div', '404')
+
+  switch (state.activePage$()) {
+    case PageEnum.Home:
+      return home.view()
+    case PageEnum.About:
+      return about.view()
+    case PageEnum.Counter:
+      return counter.view(state.counterState)
+    case PageEnum.Clock:
+      return clock.view(state.clockState)
+    case PageEnum.NestedCounter:
+      return nestedCounter.view(state.nestedCounterState)
+    default:
+      console.log(`${state.activePage$().toString()} is unknown.`)
+      return h('div', '404')
   }
 }
 
